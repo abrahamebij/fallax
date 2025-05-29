@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fallax
 
-## Getting Started
+**Deception Ends Here.**  
+Fallax is a modern phishing detection web app that helps users identify suspicious URLs before clicking. It combines known threat sources with smart heuristics to flag risky links.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- **URL Scanner**  
+  Paste any URL to analyse it for potential phishing.
+
+- **Detection Techniques**  
+  - Blocklist matching  
+  - Keyword analysis (e.g., login, bank, free)  
+  - Suspicious domain patterns  
+  - Title vs Google search mismatch  
+
+- **Risk Scoring**  
+  Displays a confidence score with a breakdown of findings.
+
+- **Minimal UI**  
+  Two routes for simplicity:
+  - `/` – Landing page with overview and call to action
+  - `/scan` – Core scanning tool
+
+---
+
+## 🧠 Tech Stack
+
+- [Next.js](https://nextjs.org/) – App framework
+- TypeScript (TSX) – Typed components
+- Tailwind CSS – Rapid styling
+- react-icons – Lightweight icons
+- (Planned) Express/Edge backend for analysis logic
+
+---
+
+## 📁 Project Structure
 
 ```bash
+fallax/
+├── app/
+│   ├── page.tsx         # Landing page
+│   └── scan/
+│       └── page.tsx     # Scanner UI
+├── components/          # Shared UI components
+├── lib/                 # Phishing logic (WIP)
+├── public/
+├── styles/
+└── README.md
+````
+
+---
+
+## 🛠️ Local Development
+
+```bash
+git clone https://github.com/abrahamebij/fallax.git
+cd fallax
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📌 Roadmap
 
-## Learn More
+- [ ] Backend integration for real-time checks
+- [ ] Google search API for title mismatch
+- [ ] User feedback or "report this site" option
+- [ ] Mobile-first polish
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🤝 Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Pull requests are welcome! Feel free to fork and suggest improvements. Let’s make the web safer, one link at a time.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT © Abraham Ebijuni
