@@ -1,107 +1,64 @@
 "use server";
-
 import MetaInfo from "@/types/MetaInfo";
-import * as cheerio from "cheerio";
-import { JSDOM } from "jsdom";
+
+function extractMetaTag(content: string, name: string): string {
+  const regex = new RegExp(
+    `<meta[^>]+(?:name|property)=["']${name}["'][^>]*content=["']([^"']+)["']`,
+    "i"
+  );
+  const match = content.match(regex);
+  return match ? match[1] : "";
+}
+
+function extractTagContent(content: string, tag: string): string {
+  const regex = new RegExp(`<${tag}[^>]*>(.*?)</${tag}>`, "i");
+  const match = content.match(regex);
+  return match ? match[1] : "";
+}
+
+function extractFavicon(content: string): string {
+  const regex =
+    /<link[^>]+rel=["'](?:icon|shortcut icon)["'][^>]+href=["']([^"']+)["']/i;
+  const match = content.match(regex);
+  console.log(match);
+
+  return match ? match[1] : "/favicon.ico";
+}
+
+function emptyMeta(): MetaInfo {
+  return {
+    title: "",
+    description: "",
+    ogTitle: "",
+    ogDescription: "",
+    image: "",
+    favicon: "",
+  };
+}
 
 export default async function getMeta(url: string): Promise<MetaInfo> {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/113.0.0.0 Safari/537.36",
+        Accept: "text/html",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Cache-Control": "no-cache",
+      },
+    });
     const html = await res.text();
+    console.log(html.slice(0, 1000));
 
-    const meta = extractWithCheerio(html);
-    const missingEssential = !meta.title && !meta.description && !meta.ogTitle;
-
-    if (missingEssential) {
-      const fallback = extractWithJsdom(html);
-      return { ...meta, ...fallback };
-    }
-
-    return meta;
+    return {
+      title: extractTagContent(html, "title"),
+      description: extractMetaTag(html, "description"),
+      ogTitle: extractMetaTag(html, "og:title"),
+      ogDescription: extractMetaTag(html, "og:description"),
+      image: extractMetaTag(html, "og:image"),
+      favicon: extractFavicon(html),
+    };
   } catch {
     return emptyMeta();
   }
-}
-
-function extractWithCheerio(html: string): MetaInfo {
-  const $ = cheerio.load(html);
-
-  const title = $("title").text() || null;
-  const ogTitle = $('meta[property="og:title"]').attr("content") || null;
-  const description = $('meta[name="description"]').attr("content") || null;
-  const ogDescription =
-    $('meta[property="og:description"]').attr("content") || null;
-  const keywordsRaw = $('meta[name="keywords"]').attr("content") || "";
-  const keywords = keywordsRaw
-    ? keywordsRaw.split(",").map((k) => k.trim())
-    : null;
-  const image = $('meta[property="og:image"]').attr("content") || null;
-  const favicon =
-    $('link[rel="icon"]').attr("href") ||
-    $('link[rel="shortcut icon"]').attr("href") ||
-    null;
-
-  return {
-    title,
-    ogTitle,
-    description,
-    ogDescription,
-    keywords,
-    image,
-    favicon,
-  };
-}
-
-function extractWithJsdom(html: string): Partial<MetaInfo> {
-  try {
-    const dom = new JSDOM(html);
-    const doc = dom.window.document;
-
-    const title = doc.querySelector("title")?.textContent ?? null;
-    const ogTitle =
-      doc.querySelector('meta[property="og:title"]')?.getAttribute("content") ??
-      null;
-    const description =
-      doc.querySelector('meta[name="description"]')?.getAttribute("content") ??
-      null;
-    const ogDescription =
-      doc
-        .querySelector('meta[property="og:description"]')
-        ?.getAttribute("content") ?? null;
-    const keywordsRaw =
-      doc.querySelector('meta[name="keywords"]')?.getAttribute("content") ?? "";
-    const keywords = keywordsRaw
-      ? keywordsRaw.split(",").map((k: string) => k.trim())
-      : null;
-    const image =
-      doc.querySelector('meta[property="og:image"]')?.getAttribute("content") ??
-      null;
-    const favicon =
-      doc.querySelector('link[rel="icon"]')?.getAttribute("href") ??
-      doc.querySelector('link[rel="shortcut icon"]')?.getAttribute("href") ??
-      null;
-
-    return {
-      title,
-      ogTitle,
-      description,
-      ogDescription,
-      keywords,
-      image,
-      favicon,
-    };
-  } catch {
-    return {};
-  }
-}
-function emptyMeta(): MetaInfo {
-  return {
-    title: null,
-    ogTitle: null,
-    description: null,
-    ogDescription: null,
-    keywords: null,
-    image: null,
-    favicon: null,
-  };
 }

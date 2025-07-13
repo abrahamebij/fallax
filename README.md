@@ -26,13 +26,20 @@ Fallax is a modern phishing detection web app that helps users identify suspicio
 
 ---
 
+## Examples of phishing links to try
+
+- [xscdfvr4e3.blogspot.tw](xscdfvr4e3.blogspot.tw)
+- [amazon-alpha-ecru.vercel.app](amazon-alpha-ecru.vercel.app)
+- [vignesh1802-r.github.io](vignesh1802-r.github.io)
+
+---
+
 ## 🧠 Tech Stack
 
 - [Next.js](https://nextjs.org/) – App framework
 - TypeScript (TSX) – Typed components
 - Tailwind CSS – Rapid styling
 - react-icons – Lightweight icons
-- (Planned) Express/Edge backend for analysis logic
 
 ---
 

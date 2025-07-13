@@ -1,8 +1,8 @@
 "use server";
-const BLOCKLIST = ["phishy-site.com", "malicious.ru", "stealyourdata.tk"];
+import blocklist from "@/data/blocklist";
 
 async function checkBlocklist(hostname: string) {
-  return BLOCKLIST.some((domain) => hostname.includes(domain));
+  return blocklist.some((domain) => hostname.includes(domain));
 }
 
 export default checkBlocklist;
