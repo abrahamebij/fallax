@@ -1,6 +1,4 @@
 # Fallax
-
-**Deception Ends Here.**  
 Fallax (Latin for "deception") is a modern phishing detection web app that helps users identify suspicious URLs before clicking. It combines known threat sources with smart heuristics to flag risky links.
 
 ---
@@ -31,6 +29,13 @@ Fallax (Latin for "deception") is a modern phishing detection web app that helps
 - [xscdfvr4e3.blogspot.tw](xscdfvr4e3.blogspot.tw)
 - [amazon-alpha-ecru.vercel.app](amazon-alpha-ecru.vercel.app)
 - [vignesh1802-r.github.io](vignesh1802-r.github.io)
+
+---
+
+## Demo
+[https://fallax.vercel.app/](https://fallax.vercel.app/)
+
+<img width="942" height="628" alt="Fallax-07-13-2025_03_14_PM" src="https://github.com/user-attachments/assets/2fd8b103-f06b-4d9c-b83d-9e27eb2c6a1d" />
 
 ---
 
