@@ -8,6 +8,7 @@ import "./globals.css";
 // });
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-sora",
+  subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
 

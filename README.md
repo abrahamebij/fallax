@@ -1,7 +1,7 @@
 # Fallax
 
 **Deception Ends Here.**  
-Fallax is a modern phishing detection web app that helps users identify suspicious URLs before clicking. It combines known threat sources with smart heuristics to flag risky links.
+Fallax (Latin for "deception") is a modern phishing detection web app that helps users identify suspicious URLs before clicking. It combines known threat sources with smart heuristics to flag risky links.
 
 ---
 
