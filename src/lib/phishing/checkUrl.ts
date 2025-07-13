@@ -23,10 +23,12 @@ async function checkUrl(url: string) {
       message: "This domain is on our trusted whitelist",
     };
   }
-
+  let score = 0;
   // Blocklist
-  if (await checkBlocklist(hostname))
+  if (await checkBlocklist(hostname)) {
     issues.push("URL matches known phishing domain");
+    score += 100;
+  }
 
   // Keywords
   const keywordHits = await checkKeywords(url);
@@ -44,7 +46,7 @@ async function checkUrl(url: string) {
   const meta = await getMeta(url);
 
   // Calculate score (whitelisted domains already returned above)
-  const score = Math.min(100, issues.length * 30);
+  score = Math.min(100, issues.length * 30);
 
   return {
     meta,
