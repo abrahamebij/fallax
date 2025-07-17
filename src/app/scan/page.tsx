@@ -11,7 +11,6 @@ import MetaInfo from "@/types/MetaInfo";
 
 interface ScanResult {
   score: number;
-  issues: string[];
   url: string;
   meta: MetaInfo;
 }

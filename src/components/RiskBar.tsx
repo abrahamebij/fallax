@@ -12,8 +12,12 @@ const RiskBar = ({ level }: { level: number }) => {
         <FaShieldAlt />
       ),
     color:
-      level < 30 ? "bg-green-600" : level > 80 ? "bg-red-600" : "bg-primary",
-    label: level < 30 ? "Safe" : level > 80 ? "Dangerous" : "Moderate",
+      level < 30
+        ? "oklch(62.7% 0.194 149.214)"
+        : level > 69
+        ? "oklch(57.7% 0.245 27.325)"
+        : "#532",
+    label: level < 30 ? "Safe" : level > 69 ? "Dangerous" : "Moderate",
   };
 
   return (
@@ -22,11 +26,8 @@ const RiskBar = ({ level }: { level: number }) => {
       <div className="flex justify-between items-center">
         <h3 className="font-semibold">Risk Level</h3>
         <span
-          className={`flex !${
-            params.color
-          }/20 items-center gap-x-1.5 py-1.5 px-3 rounded-md text-xs font-medium text-${params.color.slice(
-            3
-          )}`}
+          className={`flex items-center gap-x-1.5 py-1.5 px-3 rounded-md text-xs font-medium`}
+          style={{ color: params.color }}
         >
           <span className="text-base">{params.icon}</span>
           {params.label}
@@ -36,7 +37,7 @@ const RiskBar = ({ level }: { level: number }) => {
       <div className="relative bg-gray-300 p-2.5 rounded-2xl overflow-hidden">
         <div
           className={`absolute ${params.color} p-2.5 top-0 left-0 rounded-2xl transition-all duration-300`}
-          style={{ width: `${level}%` }}
+          style={{ width: `${level}%`, backgroundColor: params.color }}
         ></div>
         <p
           className={`absolute left-[50%] ${

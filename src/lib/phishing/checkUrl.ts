@@ -7,6 +7,7 @@ import getMeta from "./getMeta";
 
 async function checkUrl(url: string) {
   const issues: string[] = [];
+  let score = 0;
   const parsedUrl = new URL(url);
   const hostname = parsedUrl.hostname.toLowerCase();
 
@@ -18,41 +19,41 @@ async function checkUrl(url: string) {
       meta,
       url,
       score: 0,
-      issues: [],
       whitelisted: true,
       message: "This domain is on our trusted whitelist",
     };
   }
-  let score = 0;
+
   // Blocklist
   if (await checkBlocklist(hostname)) {
     issues.push("URL matches known phishing domain");
-    score += 100;
+    score += 70; // Assign a high score for blocklist
   }
 
   // Keywords
   const keywordHits = await checkKeywords(url);
   if (keywordHits.length) {
     issues.push(`Suspicious keywords found: ${keywordHits.join(", ")}`);
+    score += 15; // Assign a score for suspicious keywords
   }
 
   // Patterns
-  const patternHits = await checkSuspiciousPatterns(hostname);
+  const patternHits = checkSuspiciousPatterns(hostname);
   if (patternHits.length) {
     issues.push(`Suspicious domain patterns: ${patternHits.join(", ")}`);
+    score += 20; // Assign a score for suspicious patterns
   }
 
   // Get Page Metadata
   const meta = await getMeta(url);
 
-  // Calculate score (whitelisted domains already returned above)
-  score = Math.min(100, issues.length * 30);
+  // Cap the score at 100
+  score = Math.min(100, score);
 
   return {
     meta,
     url,
     score,
-    issues,
     whitelisted: false,
   };
 }
